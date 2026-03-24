@@ -1,0 +1,8 @@
+# PyCharm files I CLEARLY won't need publicly available
+.idea
+
+# My personal files for development
+development/
+
+# Do I even need to explain this one?
+.env
