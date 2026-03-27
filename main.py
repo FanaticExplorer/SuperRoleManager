@@ -3,6 +3,7 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 from utils.logger import logger
+from utils.config_watcher import config_watcher
 from views.main_menu import MainMenuView
 from services.role_service import role_service
 
@@ -12,6 +13,8 @@ TOKEN = os.getenv("BOT_TOKEN")
 
 
 class SuperRoleManager(commands.Bot):
+    # No one really knows how to fix those warnings properly nowdays
+    # noinspection PyDunderSlots,PyUnresolvedReferences
     def __init__(self):
         intents = discord.Intents.default()
         intents.message_content = True
@@ -33,6 +36,9 @@ class SuperRoleManager(commands.Bot):
             logger.info("Logged in.")
 
         logger.info(f"Loaded {len(role_service.categories)} categories from config.")
+
+        # Start the config watcher for hot reload
+        config_watcher.start()
 
 
 if __name__ == "__main__":
