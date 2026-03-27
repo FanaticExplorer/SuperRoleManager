@@ -4,6 +4,7 @@ from models.role_config import Category, RoleEntry
 from utils.logger import logger
 from utils.config_loader import load_config
 
+
 class RoleService:
     def __init__(self):
         self.categories: list[Category] = []
@@ -19,7 +20,9 @@ class RoleService:
         return None
 
     @staticmethod
-    def get_user_roles_in_category(member: discord.Member, category: Category) -> list[discord.Role]:
+    def get_user_roles_in_category(
+        member: discord.Member, category: Category
+    ) -> list[discord.Role]:
         cat_role_ids = {r.id for r in category.roles}
         return [r for r in member.roles if r.id in cat_role_ids]
 
@@ -58,15 +61,19 @@ class RoleService:
             logger.error(f"HTTP ошибка при снятии роли {role_id}: {e}")
             raise
 
-    async def handle_single_select(self, member: discord.Member, category: Category, new_role: RoleEntry):
+    async def handle_single_select(
+        self, member: discord.Member, category: Category, new_role: RoleEntry
+    ):
         current_roles = self.get_user_roles_in_category(member, category)
         # Remove other roles in category
         for r in current_roles:
             if r.id != new_role.id:
                 await self.remove_role(member, r.id)
-        
+
         if self.has_role(member, new_role.id):
-            await self.remove_role(member, new_role.id) # Toggle off if they click current
+            await self.remove_role(
+                member, new_role.id
+            )  # Toggle off if they click current
         else:
             await self.add_role(member, new_role.id)
 
@@ -83,12 +90,14 @@ class RoleService:
         return guild_role.name if guild_role else "Unknown Role"
 
     @staticmethod
-    async def resolve_emoji(role_entry: RoleEntry, guild_role: discord.Role) -> Optional[discord.PartialEmoji | str]:
+    async def resolve_emoji(
+        role_entry: RoleEntry, guild_role: discord.Role
+    ) -> Optional[discord.PartialEmoji | str]:
         if role_entry.emoji is None:
             return None
-            
+
         emoji_val = str(role_entry.emoji).strip()
-        
+
         if emoji_val == "-1":
             return None
 
@@ -101,7 +110,8 @@ class RoleService:
 
         if emoji_val.isdigit():
             return discord.PartialEmoji(name="e", id=int(emoji_val))
-            
+
         return str(role_entry.emoji)
+
 
 role_service = RoleService()

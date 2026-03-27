@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import Optional, Union
 
+
 @dataclass
 class EmbedConfig:
     title: str
@@ -8,11 +9,13 @@ class EmbedConfig:
     image: Optional[str] = None
     color: Optional[int] = None
 
+
 @dataclass
 class RoleEntry:
     id: int
     name: Optional[str]
     emoji: Union[str, int, None]
+
 
 @dataclass
 class Category:
