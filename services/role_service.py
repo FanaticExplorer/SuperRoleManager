@@ -18,14 +18,17 @@ class RoleService:
                 return cat
         return None
 
-    def get_user_roles_in_category(self, member: discord.Member, category: Category) -> list[discord.Role]:
+    @staticmethod
+    def get_user_roles_in_category(member: discord.Member, category: Category) -> list[discord.Role]:
         cat_role_ids = {r.id for r in category.roles}
         return [r for r in member.roles if r.id in cat_role_ids]
 
-    def has_role(self, member: discord.Member, role_id: int) -> bool:
+    @staticmethod
+    def has_role(member: discord.Member, role_id: int) -> bool:
         return any(r.id == role_id for r in member.roles)
 
-    async def add_role(self, member: discord.Member, role_id: int):
+    @staticmethod
+    async def add_role(member: discord.Member, role_id: int):
         try:
             role = member.guild.get_role(role_id)
             if not role:
@@ -40,7 +43,8 @@ class RoleService:
             logger.error(f"HTTP ошибка при выдаче роли {role_id}: {e}")
             raise
 
-    async def remove_role(self, member: discord.Member, role_id: int):
+    @staticmethod
+    async def remove_role(member: discord.Member, role_id: int):
         try:
             role = member.guild.get_role(role_id)
             if not role:
@@ -72,12 +76,14 @@ class RoleService:
         else:
             await self.add_role(member, role.id)
 
-    async def resolve_name(self, role_entry: RoleEntry, guild_role: discord.Role) -> str:
+    @staticmethod
+    async def resolve_name(role_entry: RoleEntry, guild_role: discord.Role) -> str:
         if role_entry.name:
             return role_entry.name
         return guild_role.name if guild_role else "Unknown Role"
 
-    async def resolve_emoji(self, role_entry: RoleEntry, guild_role: discord.Role) -> Optional[discord.PartialEmoji | str]:
+    @staticmethod
+    async def resolve_emoji(role_entry: RoleEntry, guild_role: discord.Role) -> Optional[discord.PartialEmoji | str]:
         if role_entry.emoji is None:
             return None
             
