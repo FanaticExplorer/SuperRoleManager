@@ -38,12 +38,12 @@ class RoleService:
                 logger.error(f"Role {role_id} not found in guild.")
                 return
             await member.add_roles(role)
-            logger.info(f"[+] {member} получил роль {role.name} ({role_id})")
+            logger.info(f"[+] {member} received role {role.name} ({role_id})")
         except discord.Forbidden:
-            logger.error(f"Нет прав выдать роль {role_id} участнику {member}")
+            logger.error(f"No permissions to assign role {role_id} to member {member}")
             raise
         except discord.HTTPException as e:
-            logger.error(f"HTTP ошибка при выдаче роли {role_id}: {e}")
+            logger.error(f"HTTP error assigning role {role_id}: {e}")
             raise
 
     @staticmethod
@@ -53,12 +53,12 @@ class RoleService:
             if not role:
                 return
             await member.remove_roles(role)
-            logger.info(f"[-] {member} потерял роль {role.name} ({role_id})")
+            logger.info(f"[-] {member} lost role {role.name} ({role_id})")
         except discord.Forbidden:
-            logger.error(f"Нет прав снять роль {role_id} участнику {member}")
+            logger.error(f"No permissions to remove role {role_id} from member {member}")
             raise
         except discord.HTTPException as e:
-            logger.error(f"HTTP ошибка при снятии роли {role_id}: {e}")
+            logger.error(f"HTTP error removing role {role_id}: {e}")
             raise
 
     async def handle_single_select(
