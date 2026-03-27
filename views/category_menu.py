@@ -2,12 +2,13 @@ import discord
 from services.role_service import role_service
 from views.role_selection import RoleSelectionView
 from views.base_view import BaseEphemeralView
+from models.role_config import Category
 
 class CategoryMenuView(BaseEphemeralView):
     def __init__(self):
         super().__init__()
         for category in role_service.categories:
-            emoji_str = str(category.emoji).strip() if category.emoji else None
+            emoji_str = str(getattr(category, 'emoji', None)).strip() if getattr(category, 'emoji', None) else None
             emoji = None
             if emoji_str and emoji_str not in ("0", "-1"):
                 if emoji_str.isdigit():
@@ -19,7 +20,8 @@ class CategoryMenuView(BaseEphemeralView):
             btn.callback = self.make_callback(category)
             self.add_item(btn)
 
-    def make_callback(self, category):
+    @staticmethod
+    def make_callback(category: Category):
         async def callback(interaction: discord.Interaction):
             guild = interaction.guild
             member = interaction.user
@@ -29,19 +31,15 @@ class CategoryMenuView(BaseEphemeralView):
 
             view = RoleSelectionView(member=member, category=category, guild=guild)
             await view.setup_buttons()
-            
-            embed_conf = category.embed
-            embed_kwargs = {
-                "title": embed_conf.title,
-                "description": embed_conf.description
-            }
-            if embed_conf.color:
-                embed_kwargs["color"] = embed_conf.color
 
-            embed = discord.Embed(**embed_kwargs)
+            embed_conf = category.embed
+            embed = discord.Embed(
+                title=embed_conf.title,
+                description=embed_conf.description,
+                color=embed_conf.color
+            )
             if embed_conf.image:
                 embed.set_image(url=embed_conf.image)
 
             await interaction.response.send_message(embed=embed, ephemeral=True, view=view)
         return callback
-
