@@ -1,5 +1,6 @@
 import discord
 
+
 class BaseEphemeralView(discord.ui.View):
     def __init__(self):
         super().__init__(timeout=5 * 60)  # 5 minutes
@@ -11,4 +12,3 @@ class BaseEphemeralView(discord.ui.View):
                 await self.message.delete()
             except discord.NotFound:
                 pass
-

@@ -4,6 +4,7 @@ from views.main_menu import MainMenuView
 from services.role_service import role_service
 from utils.logger import logger
 
+
 class RoleMenu(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
@@ -17,14 +18,14 @@ class RoleMenu(commands.Cog):
             return
 
         embed = discord.Embed(
-            title="Меню ролей", 
-            description="Нажмите на кнопку ниже, чтобы выбрать ваши роли.", 
-            color=0x5865F2
+            title="Меню ролей",
+            description="Нажмите на кнопку ниже, чтобы выбрать ваши роли.",
+            color=0x5865F2,
         )
         view = MainMenuView()
         await ctx.send(embed=embed, view=view)
 
+
 def setup(bot: commands.Bot):
     bot.add_cog(RoleMenu(bot))
     logger.info("RoleMenu cog loaded.")
-
