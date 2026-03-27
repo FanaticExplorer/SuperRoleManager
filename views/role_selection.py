@@ -3,10 +3,10 @@ from discord.ui import Button
 from services.role_service import role_service
 from models.role_config import RoleEntry, Category
 from views.base_view import BaseEphemeralView
-from typing import Optional
+from typing import Optional, Union
 
 class RoleButton(Button):
-    def __init__(self, role_entry: RoleEntry, name: str, emoji: Optional[str | discord.PartialEmoji], style: discord.ButtonStyle, category: Category):
+    def __init__(self, role_entry: RoleEntry, name: str, emoji: Optional[Union[str, discord.Emoji, discord.PartialEmoji]], style: discord.ButtonStyle, category: Category):
         super().__init__(style=style, label=name, emoji=emoji, custom_id=f"role_{category.id}_{role_entry.id}")
         self.role_entry = role_entry
         self.category = category
@@ -48,7 +48,11 @@ class RoleSelectionView(BaseEphemeralView):
                 continue
             name = await role_service.resolve_name(role_entry, guild_role)
             emoji_res = await role_service.resolve_emoji(role_entry, guild_role)
-            emoji = emoji_res if emoji_res is not None and emoji_res != "None" else None
+            
+            # Why did I even install ty bruh
+            final_emoji: Optional[Union[str, discord.Emoji, discord.PartialEmoji]] = None
+            if emoji_res is not None and str(emoji_res) != "None" and emoji_res != "None":
+                final_emoji = emoji_res
             
             style = discord.ButtonStyle.success if role_service.has_role(self.member, role_entry.id) else discord.ButtonStyle.danger
-            self.add_item(RoleButton(role_entry=role_entry, name=name, emoji=emoji, style=style, category=self.category))
+            self.add_item(RoleButton(role_entry=role_entry, name=name, emoji=final_emoji, style=style, category=self.category))
