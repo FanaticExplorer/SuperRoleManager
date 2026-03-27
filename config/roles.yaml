@@ -1,37 +1,41 @@
-# Just an example
+# Легенда для поля emoji:
+#   emoji: -1       = без эмодзи (явно)
+#   emoji: 0        = подтянуть из иконки роли (fallback: без эмодзи)
+#   emoji: "🎮"    = конкретный Unicode-эмодзи
+#   emoji: "id"     = ID кастомного Discord-эмодзи
 
 categories:
 
   - id: games
-    name: Games
+    name: Игры
     multi_select: false
     embed:
-      title: Choose a game
-      description: You can only select one game at a time.
-      image: https://example.com/games.png  # optional
-      color: "#5865F2"                       # optional, hex
+      title: Выбери игру
+      description: Можно выбрать только одну игру за раз.
+      image: https://i.pinimg.com/736x/45/66/4d/45664deff823f82bb76b8c4d0c80c4d1.jpg  # опционально
+      color: 0x5865F2                        # опционально, hex
     roles:
-      - id: 123456789
-        name: CS2           # if empty or null — fetch from Discord
+      - id: 1486405119418564790
+        name: CS2           # если пусто или null — подтянуть с Discord
         emoji: "🔫"
-      - id: 987654321
-        name: null          # fetch name from Discord by role id
-        emoji: "0"          # try to fetch from role icon
+      - id: 1486405460801229011
+        name: null          # подтянуть название из Discord по role id
+        emoji: "-1"            # попробовать подтянуть из иконки роли
 
   - id: colors
-    name: Nickname color
+    name: Цвет ника
     multi_select: true
     embed:
-      title: Choose a color
-      description: You can select multiple colors at once.
-      color: "#EB459E"
+      title: Выбери цвет
+      description: Можно выбрать несколько цветов одновременно.
+      color: 0xEB459E
     roles:
-      - id: 111111111
-        name: Red
+      - id: 1486410021091672074
+        name: Красный
         emoji: "❤️"
-      - id: 222222222
-        name: Blue
+      - id: 1486410076339310662
+        name: Синий
         emoji: "💙"
-      - id: 333333333
-        name: No color
-        emoji: "-1"         # explicitly no emoji
+      - id: 1486409575421968484
+        name: Желтый
+        emoji: "1486409854288527410"

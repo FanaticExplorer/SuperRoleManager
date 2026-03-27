@@ -6,3 +6,6 @@ development/
 
 # Do I even need to explain this one?
 .env
+
+# StackOverlow says it's good practice to ignore this one
+__pycache__/

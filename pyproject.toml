@@ -5,7 +5,7 @@ description = "Add your description here"
 requires-python = ">=3.14"
 dependencies = [
     "loguru>=0.7.3",
-    "pycord>=0.1.1",
+    "py-cord",
     "python-dotenv>=1.2.2",
     "pyyaml>=6.0.3",
 ]
