@@ -2,7 +2,6 @@ import discord
 from services.role_service import role_service
 from views.role_selection import RoleSelectionView
 from views.base_view import BaseEphemeralView
-from models.role_config import Category
 
 
 class CategoryMenuView(BaseEphemeralView):
@@ -27,17 +26,25 @@ class CategoryMenuView(BaseEphemeralView):
                 style=discord.ButtonStyle.secondary,
                 emoji=emoji,
             )
-            btn.callback = self.make_callback(category)
+            btn.callback = self.make_callback(category.id)
             self.add_item(btn)
 
     @staticmethod
-    def make_callback(category: Category):
+    def make_callback(category_id: str):
         async def callback(interaction: discord.Interaction):
             guild = interaction.guild
             member = interaction.user
             if not isinstance(member, discord.Member) or guild is None:
                 await interaction.response.send_message(
                     "Это меню работает только на сервере.", ephemeral=True
+                )
+                return
+
+            # Always get the fresh category from service (important for hot reload!)
+            category = role_service.get_category_by_id(category_id)
+            if category is None:
+                await interaction.response.send_message(
+                    "Категория не найдена. Пожалуйста, обновите меню.", ephemeral=True
                 )
                 return
 
