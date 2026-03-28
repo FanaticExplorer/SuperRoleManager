@@ -22,6 +22,8 @@ Smooth for users and stays maintainable for admins! Win-win!
 - Automatically skips unavailable or missing roles
 - Hot-reload: edit the YAML and changes apply immediately
 
+<img height="300" src="./assets/preview.png" width="525" alt="Preview of the role menu UI, showing categories and role options with buttons.">
+
 ## Architecture
 
 ```
