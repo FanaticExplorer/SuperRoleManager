@@ -16,5 +16,5 @@ class MainMenuView(discord.ui.View):
         self, button: discord.ui.Button, interaction: discord.Interaction
     ):
         view = CategoryMenuView()
-        embed = discord.Embed(title="Выберите категорию", color=0x3498DB)
+        embed = discord.Embed(title="Choose the category", color=0x3498DB)
         await interaction.response.send_message(embed=embed, ephemeral=True, view=view)

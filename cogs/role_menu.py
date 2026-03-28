@@ -12,14 +12,14 @@ class RoleMenu(commands.Cog):
     @commands.command(name="setup")
     @commands.has_permissions(administrator=True)
     async def setup_menu(self, ctx: commands.Context):
-        """Создает главное меню ролей"""
+        """Creates the main role menu"""
         if not role_service.categories:
-            await ctx.send("Конфиг ролей пуст. Проверьте `roles.yaml`.")
+            await ctx.send("Role config is empty. Check `roles.yaml`.")
             return
 
         embed = discord.Embed(
-            title="Меню ролей",
-            description="Нажмите на кнопку ниже, чтобы выбрать ваши роли.",
+            title="Role Menu",
+            description="Click the button below to select your roles.",
             color=0x5865F2,
         )
         view = MainMenuView()

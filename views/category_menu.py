@@ -36,7 +36,7 @@ class CategoryMenuView(BaseEphemeralView):
             member = interaction.user
             if not isinstance(member, discord.Member) or guild is None:
                 await interaction.response.send_message(
-                    "Это меню работает только на сервере.", ephemeral=True
+                    "This menu only works on a server.", ephemeral=True
                 )
                 return
 
@@ -44,7 +44,7 @@ class CategoryMenuView(BaseEphemeralView):
             category = role_service.get_category_by_id(category_id)
             if category is None:
                 await interaction.response.send_message(
-                    "Категория не найдена. Пожалуйста, обновите меню.", ephemeral=True
+                    "Category not found. Please update the menu.", ephemeral=True
                 )
                 return
 
