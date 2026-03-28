@@ -1,41 +1,40 @@
-# Легенда для поля emoji:
-#   emoji: -1       = без эмодзи (явно)
-#   emoji: 0        = подтянуть из иконки роли (fallback: без эмодзи)
-#   emoji: "🎮"    = конкретный Unicode-эмодзи
-#   emoji: "id"     = ID кастомного Discord-эмодзи
+#   emoji: -1       = no emoji at all
+#   emoji: 0        = get from role's icon (not tested) (fallback: no emoji)
+#   emoji: "🎮"    = specifc Unicode-emoji
+#   emoji: "id"     = ID of custom Discord-emoji
 
 categories:
 
   - id: games
-    name: Игры
+    name: Games
     multi_select: false
     embed:
-      title: Выбери игру
-      description: Можно выбрать только одну игру за раз.
-      image: https://i.pinimg.com/736x/45/66/4d/45664deff823f82bb76b8c4d0c80c4d1.jpg  # опционально
-      color: 0x5865F2                        # опционально, hex
+      title: Choose a game
+      description: You can select only one game at a time.
+      image: https://example.com/image.png  # Optional
+      color: 0x5865F2                        # optional, hex
     roles:
       - id: 1486405119418564790
-        name: CS2           # если пусто или null — подтянуть с Discord
+        name: CS2           # if empty or null — pull from Discord
         emoji: "🔫"
       - id: 1486405460801229011
-        name: null          # подтянуть название из Discord по role id
-        emoji: "-1"            # попробовать подтянуть из иконки роли
+        name: null
+        emoji: "-1"
 
   - id: colors
-    name: Цвет ника
+    name: Nickname Color
     multi_select: true
     embed:
-      title: Выбери цвет
-      description: Можно выбрать несколько цветов одновременно.
+      title: Choose a color
+      description: You can select multiple colors simultaneously.
       color: 0xEB459E
     roles:
       - id: 1486410021091672074
-        name: Красный
+        name: Red
         emoji: "❤️"
       - id: 1486410076339310662
-        name: Синий
+        name: Blue
         emoji: "💙"
       - id: 1486409575421968484
-        name: Желтый
-        emoji: "1486409854288527410"
+        name: Yellow
+        emoji: "1486409854288527410" # custom emoji by ID
