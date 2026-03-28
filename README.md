@@ -3,13 +3,14 @@
 [![wakatime](https://wakatime.com/badge/user/4c9e13d6-f2cb-49e8-a798-6f2ee2f1963f/project/3ea92694-e90e-4976-8766-20accd08f706.svg)](https://wakatime.com/badge/user/4c9e13d6-f2cb-49e8-a798-6f2ee2f1963f/project/3ea92694-e90e-4976-8766-20accd08f706)
 
 
-A config-driven Discord role manager with live UI updates and hot-reload configuration written with Pycord. Use modern buttons instead of reactions!
+A config-driven Discord role manager with state-aware UI and hot-reload configuration built on Pycord. Use modern buttons instead of reactions!
+
 
 ## Why?
 
 Most self-role bots start simple but turn into a mess at scale. Discord's built-in role customization is not customizable and requires enabling community features. "Reaction role" bots feel outdated, hacky, and locked around reactions api limitations. Plus, having all categories in one channel sometimes turns into wall of text.
 
-SuperRoleManager moves in a different approach. First, it provides clean and comfortable config to manage all your role categories and options in one place. Then, it renders a dynamic menu where user can choose which specific role category they are interested in, and then pick from there. The buttons are state-aware, so they always show the real role state of the user. The service layer enforces all the rules, so you can have single-select categories without worrying about edge cases. Finally, any config change is hot-reloaded without needing to restart the bot.
+SuperRoleManager takes a different approach. It provides clean and comfortable config to manage all your role categories and options in one place. Then, it renders a dynamic menu where user can choose which specific role category they are interested in, and then pick from there. The buttons are state-aware, so they always show the real role state of the user. The service layer enforces all the rules, so you can have single-select categories without worrying about edge cases. Finally, any config change is hot-reloaded without needing to restart the bot.
 
 Smooth for users and stays maintainable for admins! Win-win!
 
@@ -51,7 +52,7 @@ categories:
         emoji: "🔫"
 ```
 
-(Supports unicode emojis, custom emoji IDs, role icons, or `-1` for none.)
+Supports unicode emojis, custom emoji IDs, role icons, or `-1` for none.
 See [roles.yaml](config/roles.yaml) for a full example.
 
 ## Tech Stack
