@@ -5,36 +5,39 @@
 
 categories:
 
-  - id: games
-    name: Games
+  - id: single
+    name: Single Selection
     multi_select: false
     embed:
-      title: Choose a game
-      description: You can select only one game at a time.
-      image: https://example.com/image.png  # Optional
+      title: Choose a role (single selection)
+      description: Here you can choose only one role. If you select another one, the previous will be removed. The name of the second role is pulled from the role itself. The third role has a custom emoji.
       color: 0x5865F2                        # optional, hex
     roles:
-      - id: 1486405119418564790
-        name: CS2           # if empty or null — pull from Discord
+      - id: 1487452218411192431
+        name: First Role
         emoji: "🔫"
-      - id: 1486405460801229011
+      - id: 1487452292398583849
         name: null
         emoji: "-1"
+      - id: 1487452323042164817
+        name: Third Role
+        emoji: "1487453351980437618" # custom emoji by ID
 
-  - id: colors
-    name: Nickname Color
+  - id: multi
+    name: Multiple Selection
     multi_select: true
     embed:
-      title: Choose a color
-      description: You can select multiple colors simultaneously.
+      title: Choose a role (multiple selection)
+      description: Here you can choose multiple roles.
+      image: https://i.pinimg.com/736x/05/2e/bd/052ebd7e9dcb06080b7cda54c06c1a9c.jpg
       color: 0xEB459E
     roles:
-      - id: 1486410021091672074
-        name: Red
-        emoji: "❤️"
-      - id: 1486410076339310662
-        name: Blue
-        emoji: "💙"
-      - id: 1486409575421968484
-        name: Yellow
-        emoji: "1486409854288527410" # custom emoji by ID
+      - id: 1487452342268985536
+        name: First
+        emoji: "0"
+      - id: 1487452399827292311
+        name: Second
+        emoji: "-1"
+      - id: 1487452437626490941
+        name: Third
+        emoji: "-1"

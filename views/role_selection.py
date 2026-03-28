@@ -30,7 +30,7 @@ class RoleButton(Button):
             or interaction.guild is None
         ):
             await interaction.response.send_message(
-                "Это меню работает только на сервере.", ephemeral=True
+                "This menu only works on a server.", ephemeral=True
             )
             return
 
@@ -45,7 +45,7 @@ class RoleButton(Button):
                 )
         except (discord.Forbidden, discord.HTTPException):
             await interaction.response.send_message(
-                "Ошибка при изменении роли.", ephemeral=True
+                "Error changing role.", ephemeral=True
             )
             return
 
