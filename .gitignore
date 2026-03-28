@@ -9,6 +9,3 @@ development/
 
 # StackOverlow says it's good practice to ignore this one
 __pycache__/
-
-# Not sure if this one should be public :p
-.github
