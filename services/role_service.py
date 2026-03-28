@@ -35,15 +35,15 @@ class RoleService:
         try:
             role = member.guild.get_role(role_id)
             if not role:
-                logger.error(f"Role {role_id} not found in guild.")
+                logger.warning(f"Role {role_id} not found in guild.")
                 return
             await member.add_roles(role)
-            logger.info(f"[+] {member} received role {role.name} ({role_id})")
-        except discord.Forbidden:
-            logger.error(f"No permissions to assign role {role_id} to member {member}")
+            logger.debug(f"[+] {member} received role {role.name} ({role_id})")
+        except discord.Forbidden as e:
+            logger.warning(f"No permissions to assign role {role_id} to member {member}: {e}")
             raise
         except discord.HTTPException as e:
-            logger.error(f"HTTP error assigning role {role_id}: {e}")
+            logger.exception(f"HTTP error assigning role {role_id}: {e}")
             raise
 
     @staticmethod
@@ -51,14 +51,15 @@ class RoleService:
         try:
             role = member.guild.get_role(role_id)
             if not role:
+                logger.warning(f"Role {role_id} not found in guild.")
                 return
             await member.remove_roles(role)
-            logger.info(f"[-] {member} lost role {role.name} ({role_id})")
-        except discord.Forbidden:
-            logger.error(f"No permissions to remove role {role_id} from member {member}")
+            logger.debug(f"[-] {member} lost role {role.name} ({role_id})")
+        except discord.Forbidden as e:
+            logger.warning(f"No permissions to remove role {role_id} from member {member}: {e}")
             raise
         except discord.HTTPException as e:
-            logger.error(f"HTTP error removing role {role_id}: {e}")
+            logger.exception(f"HTTP error removing role {role_id}: {e}")
             raise
 
     async def handle_single_select(

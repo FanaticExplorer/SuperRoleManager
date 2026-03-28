@@ -28,4 +28,4 @@ class RoleMenu(commands.Cog):
 
 def setup(bot: commands.Bot):
     bot.add_cog(RoleMenu(bot))
-    logger.info("RoleMenu cog loaded.")
+    logger.debug("RoleMenu cog loaded.")

@@ -7,18 +7,18 @@ from utils.logger import logger
 def load_config(file_path: str = "config/roles.yaml") -> list[Category]:
     path = Path(file_path)
     if not path.exists():
-        logger.error(f"Config file not found: {file_path}")
+        logger.critical(f"Config file not found: {file_path}")
         return []
 
     try:
         with open(path, "r", encoding="utf-8") as f:
             data = yaml.safe_load(f)
     except Exception as e:
-        logger.error(f"Error reading config: {e}")
+        logger.exception(f"Error reading config: {e}")
         return []
 
     if not data or "categories" not in data:
-        logger.error("Invalid config format: 'categories' key missing")
+        logger.critical("Invalid config format: 'categories' key missing")
         return []
 
     categories = []
@@ -58,5 +58,5 @@ def load_config(file_path: str = "config/roles.yaml") -> list[Category]:
             )
         )
 
-    logger.info(f"Loaded {len(categories)} categories from config.")
+    logger.debug(f"Loaded {len(categories)} categories from config.")
     return categories
