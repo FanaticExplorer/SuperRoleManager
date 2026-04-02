@@ -18,10 +18,12 @@ class RoleMenu(commands.Cog):
             return
 
         embed = discord.Embed(
-            title="Role Menu",
-            description="Click the button below to select your roles.",
-            color=0x5865F2,
+            title="Приветствуем вас в данном канале! <a:FP_hiii:1384959468831248484>",
+            description="Хотите что бы люди побольше узнали о вас, или желаете получать важные уведомления о активностях на сервере?\nЗдесь вы можете выбрать интересующие вас роли!",
+            color=0xf8ce72,
         )
+        embed.set_image(url="https://cdn.discordapp.com/attachments/1018534366797889536/1487464645651464392/1embed.jpg?ex=69c93ce7&is=69c7eb67&hm=9dd8d414b950f0a7842786172e552f870aa0dc3993a0148de0b4dcd77899ae4d&")
+        embed.set_footer(text="В случае неполадок пишите fanaticexplorer")
         view = MainMenuView()
         await ctx.send(embed=embed, view=view)
 

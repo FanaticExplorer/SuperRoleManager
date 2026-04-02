@@ -55,6 +55,7 @@ def load_config(file_path: str = "config/roles.yaml") -> list[Category]:
                 multi_select=bool(cat_data.get("multi_select", False)),
                 embed=embed,
                 roles=roles,
+                emoji=cat_data.get("emoji"),
             )
         )
 

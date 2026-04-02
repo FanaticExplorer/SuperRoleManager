@@ -8,7 +8,8 @@ class MainMenuView(discord.ui.View):
 
     # noinspection PyUnusedLocal
     @discord.ui.button(
-        label="Выбрать роли",
+        label="Приступим!",
+        emoji=discord.PartialEmoji.from_str("<:FP_whitewolf_Mmmmm:1445417863060918424>"),
         style=discord.ButtonStyle.primary,
         custom_id="persistent_main_menu_button",
     )
@@ -16,5 +17,12 @@ class MainMenuView(discord.ui.View):
         self, button: discord.ui.Button, interaction: discord.Interaction
     ):
         view = CategoryMenuView()
-        embed = discord.Embed(title="Choose the category", color=0x3498DB)
+        embed = discord.Embed(
+            title="Выберите требуемую для вас категорию. <:FP_whitewolf_FirNotes:1445417902475051090>",
+            description="Мы готовы записывать ваши желания и выдавать вам роли.",
+            color=0xefa05d
+        )
+        embed.set_image(url="https://cdn.discordapp.com/attachments/1018534366797889536/1487468285892235504/2embed.png?ex=69c9404b&is=69c7eecb&hm=14665c5e652b3c4be85168078119dc9b8e3d3deec72ca9b1b4798ee4892021a1&")
+        embed.set_footer(text="Все роли выбранные вами подсвечиваются зеленым и при повторном нажатии на них они будут убраны.")
+        
         await interaction.response.send_message(embed=embed, ephemeral=True, view=view)
