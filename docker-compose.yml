@@ -1,0 +1,11 @@
+services:
+  bot:
+    build: .
+    container_name: super-role-manager
+    restart: always
+    env_file: .env
+    environment:
+      - TZ=Europe/Bratislava
+    volumes:
+      - ./config:/app/config
+      - ./logs:/app/logs

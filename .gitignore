@@ -9,3 +9,6 @@ development/
 
 # StackOverlow says it's good practice to ignore this one
 __pycache__/
+
+# Logs
+logs

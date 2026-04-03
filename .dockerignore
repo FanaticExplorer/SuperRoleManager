@@ -1,0 +1,17 @@
+# built-in python bs
+.venv
+__pycache__
+
+# git history
+.git
+.gitignore
+
+# pycharm
+.idea
+
+# development process or github repo
+development
+logs
+assets
+*.md
+LICENSE
