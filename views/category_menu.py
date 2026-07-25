@@ -48,6 +48,8 @@ class CategoryMenuView(BaseEphemeralView):
                 )
                 return
 
+            await interaction.response.defer(ephemeral=True)
+
             view = RoleSelectionView(member=member, category=category, guild=guild)
             await view.setup_buttons()
 
@@ -60,7 +62,7 @@ class CategoryMenuView(BaseEphemeralView):
             if embed_conf.image:
                 embed.set_image(url=embed_conf.image)
 
-            await interaction.response.send_message(
+            await interaction.followup.send(
                 embed=embed, ephemeral=True, view=view
             )
 

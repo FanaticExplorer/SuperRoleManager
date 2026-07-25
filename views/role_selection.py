@@ -25,11 +25,13 @@ class RoleButton(Button):
         self.category = category
 
     async def callback(self, interaction: discord.Interaction):
+        await interaction.response.defer()
+
         if (
             not isinstance(interaction.user, discord.Member)
             or interaction.guild is None
         ):
-            await interaction.response.send_message(
+            await interaction.followup.send(
                 "This menu only works on a server.", ephemeral=True
             )
             return
@@ -44,7 +46,7 @@ class RoleButton(Button):
                     interaction.user, self.category, self.role_entry
                 )
         except (discord.Forbidden, discord.HTTPException):
-            await interaction.response.send_message(
+            await interaction.followup.send(
                 "Error changing role.", ephemeral=True
             )
             return
@@ -57,8 +59,10 @@ class RoleButton(Button):
         if self.view:
             new_view.message = getattr(self.view, "message", None)
 
-        # update message
-        await interaction.response.edit_message(view=new_view)
+        try:
+            await interaction.edit_original_response(view=new_view)
+        except discord.NotFound:
+            pass
 
 
 class RoleSelectionView(BaseEphemeralView):

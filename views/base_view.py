@@ -10,5 +10,5 @@ class BaseEphemeralView(discord.ui.View):
         if self.message:
             try:
                 await self.message.delete()
-            except discord.NotFound:
+            except (discord.NotFound, discord.HTTPException):
                 pass
