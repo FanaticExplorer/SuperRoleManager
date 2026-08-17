@@ -1,30 +1,36 @@
 import discord
+from discord.ui import Button
+from typing import Optional
+
+from services.role_service import role_service
+from utils.embeds import build_embed
+from utils.emoji import resolve_emoji
 from views.category_menu import CategoryMenuView
 
+# Changing this orphans every menu already posted to a channel.
+MAIN_MENU_BUTTON_ID = "persistent_main_menu_button"
 
-class MainMenuView(discord.ui.View):
-    def __init__(self):
-        super().__init__(timeout=None)
 
-    # noinspection PyUnusedLocal
-    @discord.ui.button(
-        label="Приступим!",
-        emoji=discord.PartialEmoji.from_str("<:FP_whitewolf_Mmmmm:1445417863060918424>"),
-        style=discord.ButtonStyle.primary,
-        custom_id="persistent_main_menu_button",
-    )
-    async def open_menu(
-        self, button: discord.ui.Button, interaction: discord.Interaction
-    ):
+class MainMenuButton(Button):
+    def __init__(self, guild: Optional[discord.Guild] = None):
+        conf = role_service.main_menu.button
+        super().__init__(
+            label=conf.label,
+            emoji=resolve_emoji(conf.emoji, guild),
+            style=discord.ButtonStyle.primary,
+            custom_id=MAIN_MENU_BUTTON_ID,
+        )
+
+    async def callback(self, interaction: discord.Interaction):
         await interaction.response.defer(ephemeral=True)
 
         view = CategoryMenuView(guild=interaction.guild)
-        embed = discord.Embed(
-            title="Выберите требуемую для вас категорию. <:FP_firzp:1530656627823476786>",
-            description="Мы готовы записывать ваши желания и выдавать вам роли.",
-            color=0xefa05d
-        )
-        embed.set_image(url="https://cdn.discordapp.com/attachments/1018534366797889536/1487468285892235504/2embed.png?ex=69c9404b&is=69c7eecb&hm=14665c5e652b3c4be85168078119dc9b8e3d3deec72ca9b1b4798ee4892021a1&")
-        embed.set_footer(text="Все роли выбранные вами подсвечиваются зеленым и при повторном нажатии на них они будут убраны.")
+        embed = build_embed(role_service.category_menu)
 
         await interaction.followup.send(embed=embed, ephemeral=True, view=view)
+
+
+class MainMenuView(discord.ui.View):
+    def __init__(self, guild: Optional[discord.Guild] = None):
+        super().__init__(timeout=None)
+        self.add_item(MainMenuButton(guild))

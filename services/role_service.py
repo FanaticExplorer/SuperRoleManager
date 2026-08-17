@@ -1,18 +1,31 @@
 import discord
 from typing import Optional
 from discord import PartialEmoji
-from models.role_config import Category, RoleEntry
+from models.role_config import BotConfig, Category, EmbedConfig, MainMenuConfig, RoleEntry
 from utils.logger import logger
 from utils.config_loader import load_config
+from utils.emoji import resolve_emoji
 
 
 class RoleService:
     def __init__(self):
-        self.categories: list[Category] = []
+        self.config: BotConfig = BotConfig()
         self.reload_config()
 
     def reload_config(self):
-        self.categories = load_config()
+        self.config = load_config()
+
+    @property
+    def categories(self) -> list[Category]:
+        return self.config.categories
+
+    @property
+    def main_menu(self) -> MainMenuConfig:
+        return self.config.main_menu
+
+    @property
+    def category_menu(self) -> EmbedConfig:
+        return self.config.category_menu
 
     def get_category_by_id(self, category_id: str) -> Optional[Category]:
         for cat in self.categories:
@@ -100,36 +113,14 @@ class RoleService:
         if role_entry.emoji is None:
             return None
 
-        emoji_val = str(role_entry.emoji).strip()
-
-        if emoji_val == "-1":
-            return None
-
-        if emoji_val == "0":
+        if str(role_entry.emoji).strip() == "0":
             if guild_role:
                 guild_emoji = getattr(guild_role, "emoji", None)
                 if guild_emoji:
                     return guild_emoji
             return None
 
-        if emoji_val.isdigit():
-            emoji_id = int(emoji_val)
-            if guild is not None and guild.get_emoji(emoji_id) is None:
-                logger.warning(
-                    f"Emoji ID {emoji_id} not found in guild cache, omitting"
-                )
-                return None
-            return PartialEmoji(name="e", id=emoji_id)
-
-        parsed = PartialEmoji.from_str(emoji_val)
-        if parsed.is_custom_emoji() and parsed.id is not None:
-            if guild is not None and guild.get_emoji(parsed.id) is None:
-                logger.warning(
-                    f"Emoji {emoji_val} not found in guild cache, omitting"
-                )
-                return None
-
-        return str(role_entry.emoji)
+        return resolve_emoji(role_entry.emoji, guild)
 
 
 role_service = RoleService()

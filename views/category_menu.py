@@ -1,6 +1,8 @@
 import discord
 from typing import Optional
 from services.role_service import role_service
+from utils.embeds import build_embed
+from utils.emoji import resolve_emoji
 from views.role_selection import RoleSelectionView
 from views.base_view import BaseEphemeralView
 
@@ -9,32 +11,11 @@ class CategoryMenuView(BaseEphemeralView):
     def __init__(self, guild: Optional[discord.Guild] = None):
         super().__init__()
         for category in role_service.categories:
-            emoji_str = (
-                str(getattr(category, "emoji", None)).strip()
-                if getattr(category, "emoji", None)
-                else None
-            )
-            emoji = None
-            if emoji_str and emoji_str not in ("0", "-1"):
-                if emoji_str.isdigit():
-                    eid = int(emoji_str)
-                    if guild is None or guild.get_emoji(eid) is not None:
-                        emoji = discord.PartialEmoji(name="e", id=eid)
-                else:
-                    parsed = discord.PartialEmoji.from_str(emoji_str)
-                    if parsed.is_custom_emoji() and parsed.id is not None:
-                        if guild is not None and guild.get_emoji(parsed.id) is None:
-                            emoji = None
-                        else:
-                            emoji = emoji_str
-                    else:
-                        emoji = emoji_str
-
             btn = discord.ui.Button(
                 label=category.name,
                 custom_id=f"cat_{category.id}",
                 style=discord.ButtonStyle.secondary,
-                emoji=emoji,
+                emoji=resolve_emoji(category.emoji, guild),
             )
             btn.callback = self.make_callback(category.id)
             self.add_item(btn)
@@ -63,14 +44,7 @@ class CategoryMenuView(BaseEphemeralView):
             view = RoleSelectionView(member=member, category=category, guild=guild)
             await view.setup_buttons()
 
-            embed_conf = category.embed
-            embed = discord.Embed(
-                title=embed_conf.title,
-                description=embed_conf.description,
-                color=embed_conf.color,
-            )
-            if embed_conf.image:
-                embed.set_image(url=embed_conf.image)
+            embed = build_embed(category.embed)
 
             await interaction.followup.send(
                 embed=embed, ephemeral=True, view=view
