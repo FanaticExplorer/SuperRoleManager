@@ -80,7 +80,9 @@ class RoleSelectionView(BaseEphemeralView):
             if guild_role is None:
                 continue
             name = await role_service.resolve_name(role_entry, guild_role)
-            emoji_res = await role_service.resolve_emoji(role_entry, guild_role)
+            emoji_res = await role_service.resolve_emoji(
+                role_entry, guild_role, guild=self.guild
+            )
 
             # Why did I even install ty bruh
             final_emoji: Optional[Union[str, discord.Emoji, discord.PartialEmoji]] = (

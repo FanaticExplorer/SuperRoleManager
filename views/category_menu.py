@@ -1,11 +1,12 @@
 import discord
+from typing import Optional
 from services.role_service import role_service
 from views.role_selection import RoleSelectionView
 from views.base_view import BaseEphemeralView
 
 
 class CategoryMenuView(BaseEphemeralView):
-    def __init__(self):
+    def __init__(self, guild: Optional[discord.Guild] = None):
         super().__init__()
         for category in role_service.categories:
             emoji_str = (
@@ -16,9 +17,18 @@ class CategoryMenuView(BaseEphemeralView):
             emoji = None
             if emoji_str and emoji_str not in ("0", "-1"):
                 if emoji_str.isdigit():
-                    emoji = discord.PartialEmoji(name="e", id=int(emoji_str))
+                    eid = int(emoji_str)
+                    if guild is None or guild.get_emoji(eid) is not None:
+                        emoji = discord.PartialEmoji(name="e", id=eid)
                 else:
-                    emoji = emoji_str
+                    parsed = discord.PartialEmoji.from_str(emoji_str)
+                    if parsed.is_custom_emoji() and parsed.id is not None:
+                        if guild is not None and guild.get_emoji(parsed.id) is None:
+                            emoji = None
+                        else:
+                            emoji = emoji_str
+                    else:
+                        emoji = emoji_str
 
             btn = discord.ui.Button(
                 label=category.name,

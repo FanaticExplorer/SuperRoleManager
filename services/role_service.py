@@ -1,5 +1,6 @@
 import discord
 from typing import Optional
+from discord import PartialEmoji
 from models.role_config import Category, RoleEntry
 from utils.logger import logger
 from utils.config_loader import load_config
@@ -92,8 +93,10 @@ class RoleService:
 
     @staticmethod
     async def resolve_emoji(
-        role_entry: RoleEntry, guild_role: discord.Role
-    ) -> Optional[discord.PartialEmoji | str]:
+        role_entry: RoleEntry,
+        guild_role: discord.Role,
+        guild: Optional[discord.Guild] = None,
+    ) -> Optional[PartialEmoji | str]:
         if role_entry.emoji is None:
             return None
 
@@ -110,7 +113,21 @@ class RoleService:
             return None
 
         if emoji_val.isdigit():
-            return discord.PartialEmoji(name="e", id=int(emoji_val))
+            emoji_id = int(emoji_val)
+            if guild is not None and guild.get_emoji(emoji_id) is None:
+                logger.warning(
+                    f"Emoji ID {emoji_id} not found in guild cache, omitting"
+                )
+                return None
+            return PartialEmoji(name="e", id=emoji_id)
+
+        parsed = PartialEmoji.from_str(emoji_val)
+        if parsed.is_custom_emoji() and parsed.id is not None:
+            if guild is not None and guild.get_emoji(parsed.id) is None:
+                logger.warning(
+                    f"Emoji {emoji_val} not found in guild cache, omitting"
+                )
+                return None
 
         return str(role_entry.emoji)
 

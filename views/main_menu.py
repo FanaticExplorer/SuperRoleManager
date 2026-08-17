@@ -18,9 +18,9 @@ class MainMenuView(discord.ui.View):
     ):
         await interaction.response.defer(ephemeral=True)
 
-        view = CategoryMenuView()
+        view = CategoryMenuView(guild=interaction.guild)
         embed = discord.Embed(
-            title="Выберите требуемую для вас категорию. <:FP_whitewolf_FirNotes:1445417902475051090>",
+            title="Выберите требуемую для вас категорию. <:FP_firzp:1530656627823476786>",
             description="Мы готовы записывать ваши желания и выдавать вам роли.",
             color=0xefa05d
         )
