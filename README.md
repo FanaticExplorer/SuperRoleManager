@@ -73,3 +73,5 @@ See [roles.yaml](config/roles.yaml) for a full example.
 5. Use `role!setup` in a channel to publish the menu (the code is in `cogs/role_menu.py` if you want to customize it)
 
 Feel free to try it or fork it for your server.
+
+> **Note:** This bot was developed 2-3 months ago. The latest commit (2026-10-27) is just a small polish pass, not new feature work - but I am ready to keep the work on this repository if it will get any notice.
