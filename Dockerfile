@@ -12,7 +12,6 @@ WORKDIR /app
 COPY --from=builder /app/.venv /app/.venv
 COPY . .
 
-# Настройки среды
 ENV PATH="/app/.venv/bin:$PATH"
 ENV PYTHONUNBUFFERED=1
 
