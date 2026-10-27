@@ -12,3 +12,6 @@ __pycache__/
 
 # Logs
 logs
+
+# Real server config, copy roles.example.yaml instead
+config/roles.yaml

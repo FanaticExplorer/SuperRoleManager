@@ -1,0 +1,59 @@
+# Copy this file to `config/roles.yaml` and edit it for your server.
+# `config/roles.yaml` is gitignored, so your real setup stays out of the repo.
+#
+#   emoji: -1       = no emoji at all
+#   emoji: 0        = get from role's icon (not tested) (fallback: no emoji)
+#   emoji: "🎮"    = specific Unicode-emoji
+#   emoji: "id"     = ID of custom Discord-emoji
+#
+# Custom emoji only render if the bot shares a server with them.
+# Unknown ones are dropped from buttons and would show as raw text in embeds.
+
+main_menu:
+  embed:
+    title: "Welcome!"
+    description: "Want people to know more about you, or get notified about what happens on the server?\nHere you can pick the roles you are interested in!"
+    color: 0xf8ce72
+  button:
+    label: "Get started"
+    emoji: "🎮"
+
+# The ephemeral category picker.
+category_menu:
+  title: "Pick a category"
+  description: "We can record your wishes and hand out the roles."
+  color: 0xefa05d
+  footer: "Selected roles are highlighted in green; click again to remove them."
+
+categories:
+  - id: games
+    name: Games
+    multi_select: false
+    emoji: "🎮"
+    embed:
+      title: "Choose your game"
+      description: "Only one at a time."
+      color: 0x5865f2
+    roles:
+      - id: 111111111111111111
+        name: CS2
+        emoji: "🔫"
+      - id: 222222222222222222
+        name: Minecraft
+        emoji: "🧱"
+
+  - id: notifications
+    name: Notifications
+    multi_select: true
+    emoji: "📌"
+    embed:
+      title: "Your notifications"
+      description: "Pick as many as you like."
+      color: 0xa1d9ec
+    roles:
+      - id: 333333333333333333
+        name: News
+        emoji: "📰"
+      - id: 444444444444444444
+        name: Events
+        emoji: "🎉"

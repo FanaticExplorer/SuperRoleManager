@@ -55,7 +55,7 @@ categories:
 ```
 
 Supports unicode emojis, custom emoji IDs, role icons, or `-1` for none.
-See [roles.yaml](config/roles.yaml) for a full example.
+See [roles.example.yaml](config/roles.example.yaml) for a full example — copy it to `config/roles.yaml` (gitignored) and edit it for your server.
 
 ## Tech Stack
 
@@ -68,7 +68,7 @@ See [roles.yaml](config/roles.yaml) for a full example.
 
 1. Clone the repo
 2. Add your `BOT_TOKEN` to `.env`
-3. Edit `config/roles.yaml` for your server
+3. Copy `config/roles.example.yaml` to `config/roles.yaml` and edit it for your server
 4. Run the bot
 5. Use `role!setup` in a channel to publish the menu (the code is in `cogs/role_menu.py` if you want to customize it)
 
