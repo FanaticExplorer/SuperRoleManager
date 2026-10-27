@@ -1,6 +1,6 @@
 [project]
 name = "superrolemanager"
-version = "0.1.0"
+version = "1.0.0"
 description = "Bot which provides fresh and comfortable way for your server members to manage their roles!"
 requires-python = ">=3.14"
 dependencies = [
