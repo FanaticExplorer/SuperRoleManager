@@ -1,14 +1,14 @@
 import discord
-from typing import Optional
+
 from services.role_service import role_service
 from utils.embeds import build_embed
 from utils.emoji import resolve_emoji
-from views.role_selection import RoleSelectionView
 from views.base_view import BaseEphemeralView
+from views.role_selection import RoleSelectionView
 
 
 class CategoryMenuView(BaseEphemeralView):
-    def __init__(self, guild: Optional[discord.Guild] = None):
+    def __init__(self, guild: discord.Guild | None = None):
         super().__init__()
         for category in role_service.categories:
             btn = discord.ui.Button(

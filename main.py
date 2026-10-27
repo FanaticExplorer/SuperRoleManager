@@ -1,11 +1,13 @@
 import os
+
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
-from utils.logger import logger
-from utils.config_watcher import config_watcher
-from views.main_menu import MainMenuView
+
 from services.role_service import role_service
+from utils.config_watcher import config_watcher
+from utils.logger import logger
+from views.main_menu import MainMenuView
 
 load_dotenv()
 
@@ -13,8 +15,6 @@ TOKEN = os.getenv("BOT_TOKEN")
 
 
 class SuperRoleManager(commands.Bot):
-    # No one really knows how to fix those warnings properly nowdays
-    # noinspection PyDunderSlots,PyUnresolvedReferences
     def __init__(self):
         intents = discord.Intents.default()
         intents.message_content = True
@@ -27,7 +27,7 @@ class SuperRoleManager(commands.Bot):
         logger.debug("Persistent views loaded.")
         try:
             self.load_extension("cogs.role_menu")
-        except Exception as e:
+        except discord.ExtensionError as e:
             logger.exception(f"Failed to load extension cogs.role_menu: {e}")
 
         if self.user:

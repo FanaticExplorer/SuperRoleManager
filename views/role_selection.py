@@ -1,9 +1,9 @@
 import discord
 from discord.ui import Button
+
+from models.role_config import Category, RoleEntry
 from services.role_service import role_service
-from models.role_config import RoleEntry, Category
 from views.base_view import BaseEphemeralView
-from typing import Optional, Union
 
 
 class RoleButton(Button):
@@ -11,7 +11,7 @@ class RoleButton(Button):
         self,
         role_entry: RoleEntry,
         name: str,
-        emoji: Optional[Union[str, discord.Emoji, discord.PartialEmoji]],
+        emoji: str | discord.Emoji | discord.PartialEmoji | None,
         style: discord.ButtonStyle,
         category: Category,
     ):
@@ -85,7 +85,7 @@ class RoleSelectionView(BaseEphemeralView):
             )
 
             # Why did I even install ty bruh
-            final_emoji: Optional[Union[str, discord.Emoji, discord.PartialEmoji]] = (
+            final_emoji: str | discord.Emoji | discord.PartialEmoji | None = (
                 None
             )
             if (

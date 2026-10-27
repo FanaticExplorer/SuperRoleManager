@@ -1,8 +1,9 @@
 from discord.ext import commands
-from views.main_menu import MainMenuView
+
 from services.role_service import role_service
 from utils.embeds import build_embed
 from utils.logger import logger
+from views.main_menu import MainMenuView
 
 
 class RoleMenu(commands.Cog):

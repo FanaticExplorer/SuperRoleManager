@@ -1,27 +1,26 @@
 from dataclasses import dataclass, field
-from typing import Optional, Union
 
 
 @dataclass
 class EmbedConfig:
     title: str
-    description: Optional[str] = None
-    image: Optional[str] = None
-    color: Optional[int] = None
-    footer: Optional[str] = None
+    description: str | None = None
+    image: str | None = None
+    color: int | None = None
+    footer: str | None = None
 
 
 @dataclass
 class ButtonConfig:
     label: str
-    emoji: Union[str, int, None] = None
+    emoji: str | int | None = None
 
 
 @dataclass
 class RoleEntry:
     id: int
-    name: Optional[str]
-    emoji: Union[str, int, None]
+    name: str | None
+    emoji: str | int | None
 
 
 @dataclass
@@ -31,7 +30,7 @@ class Category:
     multi_select: bool
     roles: list[RoleEntry]
     embed: EmbedConfig
-    emoji: Optional[str] = None
+    emoji: str | None = None
 
 
 @dataclass

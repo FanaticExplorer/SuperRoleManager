@@ -1,6 +1,7 @@
-import yaml
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
+
+import yaml
 
 from models.role_config import (
     BotConfig,
@@ -13,11 +14,10 @@ from models.role_config import (
 from utils.logger import logger
 
 
-def _parse_color(value: Any) -> Optional[int]:
+def _parse_color(value: Any) -> int | None:
     if isinstance(value, str):
         text = value.strip()
-        if text.startswith("#"):
-            text = text[1:]
+        text = text.removeprefix("#")
         try:
             return int(text, 16)
         except ValueError:
@@ -83,7 +83,7 @@ def load_config(file_path: str = "config/roles.yaml") -> BotConfig:
     try:
         with open(path, "r", encoding="utf-8") as f:
             data = yaml.safe_load(f)
-    except Exception as e:
+    except (OSError, UnicodeError, yaml.YAMLError) as e:
         logger.exception(f"Error reading config: {e}")
         return BotConfig()
 

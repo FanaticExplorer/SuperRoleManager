@@ -1,10 +1,16 @@
 import discord
-from typing import Optional
 from discord import PartialEmoji
-from models.role_config import BotConfig, Category, EmbedConfig, MainMenuConfig, RoleEntry
-from utils.logger import logger
+
+from models.role_config import (
+    BotConfig,
+    Category,
+    EmbedConfig,
+    MainMenuConfig,
+    RoleEntry,
+)
 from utils.config_loader import load_config
 from utils.emoji import resolve_emoji
+from utils.logger import logger
 
 
 class RoleService:
@@ -27,7 +33,7 @@ class RoleService:
     def category_menu(self) -> EmbedConfig:
         return self.config.category_menu
 
-    def get_category_by_id(self, category_id: str) -> Optional[Category]:
+    def get_category_by_id(self, category_id: str) -> Category | None:
         for cat in self.categories:
             if cat.id == category_id:
                 return cat
@@ -108,8 +114,8 @@ class RoleService:
     async def resolve_emoji(
         role_entry: RoleEntry,
         guild_role: discord.Role,
-        guild: Optional[discord.Guild] = None,
-    ) -> Optional[PartialEmoji | str]:
+        guild: discord.Guild | None = None,
+    ) -> PartialEmoji | str | None:
         if role_entry.emoji is None:
             return None
 
